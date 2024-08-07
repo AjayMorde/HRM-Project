@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+    <!-- <img src="logo.png" alt="Logo" class="logo"> -->
+    <div id="register-container" class="register-container active">
+        <h2>Register</h2>
+        <form id="signup-form" onsubmit="signup(event)">
+            <label for="name"><i class="fa-regular fa-user"></i>Your Name:</label>
+            <input type="text" class="name" id="name" name="name" required><br><br>
+            <input type="email" id="email" class="register-input email" placeholder="Enter Email" name="email" required>
+            <input type="password" id="password" class="register-input" placeholder="Enter Password" name="psw" required>
+            <input type="password" id="cpasword" class="register-input password" placeholder="Confirm Password" name="psw-confirm" required>
+            <select name="role" class="register-select role" id="register-role" required>
+                <option value="" disabled selected>Select your role</option>
+                <option value="admin">Admin</option>
+                <option value="department">Department</option>
+                <option value="manager">Manager</option>
+                <option value="employee">Employee</option>
+            </select>
+            <div class="error-message" id="register-error-message">Passwords do not match!</div>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+        <p>Already have an account? <a href="#" class="link register-link" onclick="showContainer('login-container')">Login here</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

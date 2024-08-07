@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/signup.css">
+
+</head>
+
+<body>
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="welcome-message">Welcome to</div>
+    <div class="custom-login-container">
+        <h5 style="position: relative;position: relative;font-size: 11px;left: 96px;">Hi Welcome to your Dashboard</h5>
+        <h5 style="position: relative; top: 82px;">Login in as</h5>
+        <form action="/login" method="post">
+            <input type="text" class="custom-login-input" placeholder="Enter Username" name="uname" required>
+            <input type="password" class="custom-login-input" placeholder="Enter Password" name="psw" required>
+            <select name="role" class="custom-select-role" id="role" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="department">Department</option>
+                <option value="manager">Manager</option>
+                <option value="employee">Employee</option>
+            </select>
+            <select name="empty" class="custom-select-empty" id="empty" required>
+                <option value="" disabled selected>Select Role</option>
+            </select>
+            <div class="custom-login-checkbox">
+                <label style="position: relative; top: 6px;"><input type="checkbox" name="remember"> Remember me</label>
+                <a href="/forgot-password" class="custom-login-link">Forgot password?</a>
+            </div>
+            <button type="submit" class="custom-login-button">Login</button>
+        </form>
+        <p style="position: relative; top: 9px;">Don't have an account? <a href="register.html" class="custom-register-link">Register here</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/signup.js"></script>
+
+</body>
+
+</html>

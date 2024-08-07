@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Desk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body,
+        html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: black;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            color: black;
+            padding: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            width: 36px;
+            border: none;
+            position: absolute;
+            z-index: 20;
+            left: 117px;
+        }
+        
+        .menu-icon {
+            width: 20px;
+            height: 2px;
+            background-color: black;
+            margin: 3px 0;
+        }
+        
+        .main-container {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        
+        .dashboard-container {
+            width: 200px;
+            padding: 23px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #ece9e6, #ffffff);
+            border-radius: -11px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            top: -9px;
+            z-index: 10;
+        }
+        
+        .dashboard-container.hidden {
+            transform: translateX(-100%);
+        }
+        
+        .dashboard-container select {
+            width: 160px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #dcdde1;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+            appearance: none;
+        }
+        
+        .dashboard-container select:hover,
+        .dashboard-container select:focus {
+            background-color: #f0f0f0;
+            outline: none;
+        }
+        
+        .main-content-container {
+            width: 100%;
+            max-width: 1132px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            height: calc(100vh - 68px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .small-box-container {
+            width: 187px;
+            height: 290px;
+            border: 1px solid black;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+            left: 25px;
+            top: 100px;
+        }
+        
+        .small-box-button {
+            padding: 10px 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            color: black;
+            background-color: #007bff;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        .small-box-button:hover {
+            background-color: white;
+        }
+        
+        .custom-empty-box {
+            width: 1033px;
+            height: 193px;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: transparent;
+            position: relative;
+            top: -161px;
+            left: -133px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .employee-icon {
+            font-size: 75px;
+            color: black;
+            position: relative;
+            left: -314px;
+        }
+        
+        .round-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            border: 1px solid #dcdde1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            position: relative;
+            margin-right: 10px;
+            left: -300px;
+            top: 80px;
+        }
+        
+        .round-checkbox input {
+            display: none;
+        }
+        
+        .round-checkbox input:checked+.checkmark {
+            background-color: #007bff;
+            border-radius: 50%;
+        }
+        
+        .checkmark {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        
+        .calendar-container {
+            position: absolute;
+            top: 215px;
+            right: 156px;
+            background-color: white;
+            border: 1px solid #dcdde1;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 15;
+            width: 146px;
+        }
+        
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .calendar-nav-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        .calendar-month-year {
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .pie-chart {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border-radius: 50%;
+            background: conic-gradient( #ff6384 calc(var(--percentage1) * 1%), #36a2eb calc(var(--percentage1) * 1%), #36a2eb calc(var(--percentage1) * 1% + var(--percentage2) * 1%), #ffce56 calc(var(--percentage1) * 1% + var(--percentage2) * 1%), #ffce56 calc(var(--percentage1) * 1% + var(--percentage2) * 1% + var(--percentage3) * 1%), #4bc0c0 calc(var(--percentage1) * 1% + var(--percentage2) * 1% + var(--percentage3) * 1%));
+            background-color: transparent;
+            border: none;
+            left: 254px;
+            cursor: pointer;
+        }
+        
+        .checkbox-container {
+            padding: 20px;
+            position: absolute;
+            top: 390px;
+            right: 670px;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            z-index: 10;
+        }
+        
+        .checkbox-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .additional-checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            position: absolute;
+            top: 350px;
+            right: 209px;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            width: 343px;
+        }
+        
+        .additional-checkbox-item {
+            width: calc(50% - 20px);
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .additional-checkbox-item label {
+            display: block;
+            font-size: 14px;
+        }
+        
+        .additional-checkbox-item p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: black;
+        }
+        
+        .container-1 {
+            width: 102px;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: white;
+            border-radius: 5px;
+            position: absolute;
+            top: 96px;
+            right: 700px;
+            z-index: 5;
+            height: 21px;
+        }
+        
+        .container-text {
+            margin: 10px 0;
+            font-size: 14px;
+            color: black;
+        }
+        
+        .container-2 {
+            position: relative;
+            top: -10px;
+        }
+        
+        .container-3 {
+            position: relative;
+            top: 60px;
+        }
+        
+        .container-4 {
+            position: relative;
+            left: 400px;
+        }
+        
+        .container-5 {
+            position: relative;
+            left: 400px;
+            top: -162px;
+        }
+        
+        .container-text {
+            margin: 10px 0;
+            font-size: 14px;
+            color: black;
+        }
+        
+        .small-employee-icon {
+            position: relative;
+            left: 1100px;
+            font-size: 30px;
+        }
+        
+        .admin-label {
+            position: relative;
+            left: 1089px;
+            background: azure;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            width: 37px;
+            top: -4px;
+        }
+    </style>
+</head>
+
+<body>
+    <i class="fas fa-user-tie small-employee-icon"></i>
+    <p class="admin-label">Admin</p>
+
+    <button class="menu-button" onclick="toggleMenu()">
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+    </button>
+
+    <div class="main-container">
+        <div class="dashboard-container hidden">
+            <select>
+                <option value="employee">Employee</option>
+                <option value="leave">Leave</option>
+                <option value="attendance">Attendance</option>
+                <option value="payroll">Payroll</option>
+            </select>
+            <select>
+                <option value="leave">Leave</option>
+                <option value="leaveRequests">Leave Requests</option>
+                <option value="leaveStatus">Leave Status</option>
+            </select>
+            <select>
+                <option value="attendance">Attendance</option>
+                <option value="dailyLog">Daily Log</option>
+                <option value="attendanceSummary">Attendance Summary</option>
+            </select>
+            <select>
+                <option value="payroll">Payroll</option>
+                <option value="salary">Salary</option>
+                <option value="payslip">Payslip</option>
+                <option value="deductions">Deductions</option>
+            </select>
+        </div>
+        <div class="main-content-container">
+            <div class="small-box-container">
+                <button class="small-box-button" onclick="fetchPercentageData()">Attendance</button>
+                <button class="small-box-button" onclick="fetchPercentageData()">Documents</button>
+                <button class="small-box-button" onclick="fetchPercentageData()">Bank Details</button>
+                <button class="small-box-button" onclick="fetchPercentageData()">Address Details</button>
+                <button class="small-box-button" onclick="fetchPercentageData()">Emergency Contacts</button>
+                <button class="small-box-button" onclick="fetchPercentageData()">Assets</button>
+            </div>
+            <div class="custom-empty-box">
+                <i class="fas fa-user-tie employee-icon"></i>
+
+
+                <div class="round-checkbox-container">
+                    <label class="round-checkbox">
+                        <input type="checkbox">
+                        <div class="checkmark"></div>
+                    </label>
+                    <span style="position: relative;left: -267px;top: 60px;">Permanents</span>
+                    <span style="position: relative; left: -380px;top: 20px;">Priya Pawar</span>
+                    <div class="container-1">
+                        <p class="container-text">Director</p>
+                        <p class="container-text">Emp ID</p>
+                        <p class="container-text">App Admin</p>
+                    </div>
+                    <div class="container-2">
+                        <p class="container-text">Department</p>
+                        <p class="container-text">Main Department</p>
+                    </div>
+                    <div class="container-3">
+                        <p class="container-text">Work Shift</p>
+                        <p class="container-text">Regular Work Shift</p>
+                    </div>
+
+                    <div class="container-4">
+                        <p class="container-text">joining Date</p>
+                        <p class="container-text">15/09/2003</p>
+                    </div>
+                    <div class="container-5">
+                        <p class="container-text">Salary</p>
+                        <p class="container-text">80,000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-controls">
+                    <button class="calendar-nav-button" onclick="prevMonth()">&#9664;</button>
+                    <div class="calendar-month-year" id="calendar-month-year"></div>
+                    <button class="calendar-nav-button" onclick="nextMonth()">&#9654;</button>
+                </div>
+            </div>
+            <div class="pie-chart" id="pie-chart" style="top: 200px; right: 156px;"></div>
+        </div>
+
+        <div class="checkbox-container">
+            <label><input type="checkbox" id="regular" /> Regular 15 days</label>
+            <label><input type="checkbox" id="early" /> Early 8 days</label>
+            <label><input type="checkbox" id="onLeave" /> On Leave 2 days</label>
+            <label><input type="checkbox" id="late" /> Late 0 days</label>
+        </div>
+
+
+        <div class="additional-checkbox-container">
+            <div class="additional-checkbox-item">
+                <label><input type="checkbox" id="totalSchedule" /> </label>
+                <p>Total work hours scheduled in a given period.</p>
+            </div>
+            <div class="additional-checkbox-item">
+                <label><input type="checkbox" id="workAvailability" /> </label>
+                <p>Total available work hours.</p>
+            </div>
+            <div class="additional-checkbox-item">
+                <label><input type="checkbox" id="activeHours" /></label>
+                <p>Total hours actively worked.</p>
+            </div>
+            <div class="additional-checkbox-item">
+                <label><input type="checkbox" id="averageBehavior" /></label>
+                <p>Average behavior rating.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.dashboard-container').classList.toggle('hidden');
+        }
+
+        const calendarMonthYear = document.getElementById('calendar-month-year');
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth();
+
+        function updateMonthYear() {
+            calendarMonthYear.textContent = `${currentYear} - ${currentMonth + 1}`;
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateMonthYear();
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateMonthYear();
+        }
+
+        updateMonthYear();
+
+        function fetchPercentageData() {
+            setTimeout(() => {
+                const percentage1 = Math.floor(Math.random() * 50);
+                const percentage2 = Math.floor(Math.random() * (100 - percentage1));
+                const percentage3 = 100 - percentage1 - percentage2;
+                updatePercentage(percentage1, percentage2, percentage3);
+            }, 500);
+        }
+
+        function updatePercentage(percentage1, percentage2, percentage3) {
+            const pieChart = document.getElementById('pie-chart');
+            const total = percentage1 + percentage2 + percentage3;
+            pieChart.style.setProperty('--percentage1', (percentage1 / total) * 100);
+            pieChart.style.setProperty('--percentage2', (percentage2 / total) * 100);
+            pieChart.style.setProperty('--percentage3', (percentage3 / total) * 100);
+        }
+
+        document.getElementById('pie-chart').addEventListener('click', fetchPercentageData);
+
+        updatePercentage(40, 30, 30);
+    </script>
+</body>
+
+</html>

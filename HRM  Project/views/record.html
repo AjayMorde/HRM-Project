@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Desk</title>
+    <style>
+        body,
+        html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: black;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ece9e6;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 91px;
+            width: 100%;
+            z-index: 10;
+            height: 32px;
+            box-sizing: border-box;
+        }
+        
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            color: black;
+            padding: 10px;
+            cursor: pointer;
+            width: 36px;
+            border: none;
+        }
+        
+        .menu-bar {
+            width: 20px;
+            height: 2px;
+            background-color: black;
+            margin: 3px 0;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-all-employees {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            position: relative;
+            left: -904px;
+        }
+        
+        .btn-add-employee {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #008CBA;
+        }
+        
+        .header-buttons button:hover {
+            opacity: 0.8;
+        }
+        
+        .nav-sidebar {
+            width: 200px;
+            padding: 23px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ece9e6, #ffffff);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: absolute;
+            top: 154px;
+            height: calc(100vh - 61px);
+        }
+        
+        .nav-sidebar.hidden {
+            transform: translateX(-100%);
+        }
+        
+        .nav-sidebar select {
+            width: 160px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #dcdde1;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+            appearance: none;
+            max-height: 150px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .nav-sidebar select:hover,
+        .nav-sidebar select:focus {
+            background-color: #f0f0f0;
+            outline: none;
+        }
+        
+        .vertical-buttons {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 154px;
+            left: 215px;
+            border: 1px solid black;
+            width: 150px;
+            height: 400px;
+        }
+        
+        .vertical-buttons button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ddd;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: left;
+        }
+        
+        .vertical-buttons button:hover {
+            background-color: #ccc;
+        }
+        
+        .new-container {
+            border: 1px solid black;
+            padding: 20px;
+            margin: 10px;
+            position: absolute;
+            top: 144px;
+            left: 375px;
+            width: calc(100% - 375px - 50px);
+            height: 400px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+        }
+        
+        .item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            height: 392px;
+            position: relative;
+            padding-top: 4px;
+            text-align: left;
+            top: -18px;
+        }
+        
+        .item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1px;
+            height: 100%;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-container">
+        <button class="menu-toggle" onclick="toggleNav()">
+            <div class="menu-bar"></div>
+            <div class="menu-bar"></div>
+            <div class="menu-bar"></div>
+        </button>
+        <div class="header-buttons">
+            <button class="btn-all-employees">All Employees</button>
+            <button class="btn-add-employee">Add Employee</button>
+        </div>
+    </div>
+
+    <div class="nav-sidebar hidden">
+        <select>
+            <option value="emp">Employee</option>
+            <option value="leave">Leave</option>
+            <option value="att">Attendance</option>
+            <option value="pay">Payroll</option>
+        </select>
+        <select>
+            <option value="leave">Leave</option>
+            <option value="req">Leave Requests</option>
+            <option value="status">Leave Status</option>
+        </select>
+        <select>
+            <option value="att">Attendance</option>
+            <option value="log">Daily Log</option>
+            <option value="sum">Attendance Summary</option>
+        </select>
+        <select>
+            <option value="pay">Payroll</option>
+            <option value="sal">Salary</option>
+            <option value="slip">Payslip</option>
+            <option value="ded">Deductions</option>
+        </select>
+    </div>
+
+    <div class="vertical-buttons">
+        <button>Job Desk</button>
+        <button>Employee</button>
+        <button>Leave</button>
+        <button>Attendance</button>
+        <button>Payroll</button>
+        <button>Administrations</button>
+        <button>Assets</button>
+        <button>Settings</button>
+    </div>
+
+    <div class="new-container">
+        <div class="item">Profile</div>
+        <div class="item">Employee ID</div>
+        <div class="item">Designation</div>
+        <div class="item">Employment Status</div>
+        <div class="item">Department</div>
+        <div class="item">Workshift</div>
+        <div class="item">Joining Date</div>
+        <div class="item">Salary</div>
+        <div class="item">Role</div>
+        <div class="item">Action</div>
+    </div>
+
+    <script>
+        function toggleNav() {
+            document.querySelector('.nav-sidebar').classList.toggle('hidden');
+        }
+    </script>
+</body>
+
+</html>

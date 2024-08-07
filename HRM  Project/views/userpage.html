@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body,
+        html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: black;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .top-options-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            width: 34%;
+            top: 286px;
+            position: relative;
+            cursor: pointer;
+            left: 456px;
+        }
+        
+        .top-option {
+            padding: 10px 20px;
+            color: #2196F3;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .top-option:hover {
+            color: #2196F3;
+            text-decoration: underline;
+        }
+        
+        .menu-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            color: black;
+            padding: 10px;
+            cursor: pointer;
+            width: 36px;
+            border: none;
+            position: fixed;
+            z-index: 20;
+            left: 80px;
+            top: 10px;
+        }
+        
+        .menu-icon {
+            width: 20px;
+            height: 2px;
+            background-color: black;
+            margin: 3px 0;
+        }
+        
+        .dashboard-container {
+            width: 200px;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #ece9e6, #ffffff);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: fixed;
+            top: 59px;
+            height: 100%;
+            z-index: 10;
+            transform: translateX(-100%);
+        }
+        
+        .dashboard-container.visible {
+            transform: translateX(0);
+        }
+        
+        .dashboard-container select {
+            width: 160px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #dcdde1;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+            appearance: none;
+        }
+        
+        .dashboard-container select:hover,
+        .dashboard-container select:focus {
+            background-color: #f0f0f0;
+            outline: none;
+        }
+        
+        .container-one {
+            width: 886px;
+            height: 105px;
+            border: 1px solid black;
+            margin-top: 20px;
+            padding: 10px;
+            position: relative;
+            left: 268px;
+            top: 6px;
+        }
+        
+        .container-two {
+            width: 300px;
+            height: 240px;
+            border: 1px solid black;
+            margin-top: 20px;
+            padding: 10px;
+            position: relative;
+            left: 800px;
+            top: 28px;
+            box-sizing: border-box;
+        }
+        
+        .container-three {
+            width: 450px;
+            height: 240px;
+            border: 1px solid black;
+            margin-top: 20px;
+            padding: 10px;
+            position: relative;
+            top: -246px;
+            left: 249px;
+            box-sizing: border-box;
+        }
+        
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            top: 27px;
+            left: 91px;
+        }
+        
+        .total-employees {
+            background-color: #4CAF50;
+        }
+        
+        .total-departments {
+            background-color: #2196F3;
+        }
+        
+        .leave-status {
+            background-color: #FF9800;
+        }
+        
+        .on-leave-today {
+            background-color: #F44336;
+        }
+        
+        .button:hover,
+        .button:active {
+            background-color: white;
+            color: black;
+        }
+        
+        .pie-chart {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border-radius: 50%;
+            background: conic-gradient( #ff6384 calc(var(--percentage1) * 1%), #36a2eb calc(var(--percentage1) * 1%), #36a2eb calc(var(--percentage1) * 1% + var(--percentage2) * 1%), #ffce56 calc(var(--percentage1) * 1% + var(--percentage2) * 1%), #ffce56 calc(var(--percentage1) * 1% + var(--percentage2) * 1% + var(--percentage3) * 1%), #4bc0c0 calc(var(--percentage1) * 1% + var(--percentage2) * 1% + var(--percentage3) * 1%));
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .action-buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 10px;
+            width: 500px;
+            position: relative;
+            top: 19px;
+            left: 660px;
+        }
+        
+        .action-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 150px;
+            height: 42px;
+        }
+        
+        .punch-in-out,
+        .take-break,
+        .view-employee {
+            background-color: #2196F3;
+        }
+        
+        .container-four {
+            width: 31%;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            box-sizing: border-box;
+            position: relative;
+            top: 294px;
+            left: 465px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            left: 200px;
+            top: 50px;
+        }
+        
+        .bar-graph {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .bar {
+            height: 20px;
+            border-radius: -93px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            position: relative;
+            border-radius: -29px;
+        }
+        
+        .bar span {
+            height: 100%;
+            display: inline-block;
+        }
+        
+        .bar-label {
+            font-size: 14px;
+            color: black;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .bar-one {
+            width: 70%;
+            background-color: #4CAF50;
+            position: relative;
+            border-radius: -24px;
+        }
+        
+        .bar-two {
+            width: 50%;
+            background-color: #2196F3;
+            position: relative;
+            border-radius: -24px;
+        }
+        
+        .bar-three {
+            width: 80%;
+            background-color: #FF9800;
+            position: relative;
+            border-radius: -24px;
+        }
+        
+        .bar-four {
+            width: 60%;
+            background-color: #F44336;
+            position: relative;
+            border-radius: -24px;
+        }
+        
+        .bar-five {
+            width: 40%;
+            background-color: #9C27B0;
+            position: relative;
+            border-radius: -24px;
+        }
+        
+        .employee-statistics-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            top: -44px;
+            left: -70px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-options-container">
+        <div class="top-option">by employment</div>
+        <div class="top-option">by designation</div>
+        <div class="top-option">by department</div>
+    </div>
+
+
+    <button class="menu-button" onclick="toggleDashboard()">
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+    </button>
+
+
+    <div class="dashboard-container" id="dashboardContainer">
+        <select>
+            <option value="employee">Employee</option>
+            <option value="leave">Leave</option>
+            <option value="attendance">Attendance</option>
+            <option value="payroll">Payroll</option>
+        </select>
+        <select>
+            <option value="leave">Leave</option>
+            <option value="leaveRequests">Leave Requests</option>
+            <option value="leaveStatus">Leave Status</option>
+        </select>
+        <select>
+            <option value="attendance">Attendance</option>
+            <option value="dailyLog">Daily Log</option>
+            <option value="attendanceSummary">Attendance Summary</option>
+        </select>
+        <select>
+            <option value="payroll">Payroll</option>
+            <option value="salary">Salary</option>
+            <option value="payslip">Payslip</option>
+            <option value="deductions">Deductions</option>
+        </select>
+    </div>
+
+
+    <div class="action-buttons-container">
+        <button class="action-button punch-in-out">Punch-In/Punch Out</button>
+        <button class="action-button take-break">Take Break</button>
+        <button class="action-button view-employee">View As Employee</button>
+    </div>
+
+
+    <div class="container-one">
+        <button class="button total-employees">Total Employees</button>
+        <button class="button total-departments">Total Departments</button>
+        <button class="button leave-status">Leave Status</button>
+        <button class="button on-leave-today">On Leave Today</button>
+    </div>
+
+    <div class="container-two">
+        <div class="checkbox-container">
+            <label>
+                <input type="checkbox" value="early"> Early
+            </label>
+            <label>
+                <input type="checkbox" value="regular"> Regular
+            </label>
+            <label>
+                <input type="checkbox" value="late"> Late
+            </label>
+        </div>
+    </div>
+
+    <div class="pie-chart" id="pie-chart" style="top: 450px; left: 820px;"></div>
+    <span style="position: relative; left: 820px; top: -190px;">Total Attendance Today: 25</span>
+
+    <div class="container-three">
+        <div class="employee-statistics-title">Employee Statistics</div>
+        <div class="bar-graph">
+            <div class="bar bar-one">
+                <span class="bar-label">Emp-1</span>
+                <span></span>
+            </div>
+            <div class="bar bar-two">
+                <span class="bar-label">Emp-2</span>
+                <span></span>
+            </div>
+            <div class="bar bar-three">
+                <span class="bar-label">Emp-3</span>
+                <span></span>
+            </div>
+            <div class="bar bar-four">
+                <span class="bar-label">Emp-4</span>
+                <span></span>
+            </div>
+            <div class="bar bar-five">
+                <span class="bar-label">Emp-5</span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDashboard() {
+            var dashboardContainer = document.getElementById('dashboardContainer');
+            dashboardContainer.classList.toggle('visible');
+        }
+
+        function fetchPercentageData() {
+            setTimeout(() => {
+                const percentage1 = Math.floor(Math.random() * 50);
+                const percentage2 = Math.floor(Math.random() * (100 - percentage1));
+                const percentage3 = 100 - percentage1 - percentage2;
+                updatePercentage(percentage1, percentage2, percentage3);
+            }, 500);
+        }
+
+        function updatePercentage(percentage1, percentage2, percentage3) {
+            const pieChart = document.getElementById('pie-chart');
+            const total = percentage1 + percentage2 + percentage3;
+            pieChart.style.setProperty('--percentage1', (percentage1 / total) * 100);
+            pieChart.style.setProperty('--percentage2', (percentage2 / total) * 100);
+            pieChart.style.setProperty('--percentage3', (percentage3 / total) * 100);
+        }
+
+        document.getElementById('pie-chart').addEventListener('click', fetchPercentageData);
+
+        updatePercentage(40, 30, 30);
+
+        function changeBarColor(event) {
+            const bar = event.target;
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            bar.style.backgroundColor = randomColor;
+        }
+
+        const bars = document.querySelectorAll('.bar');
+        bars.forEach(bar => {
+            bar.addEventListener('click', changeBarColor);
+        });
+    </script>
+</body>
+
+</html>

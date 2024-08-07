@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.logo {
+    position: relative;
+    left: -500px;
+    margin-bottom: 20px;
+}
+
+.welcome-message {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: black;
+}
+
+.custom-login-container {
+    background-color: #fff;
+    padding: 20px;
+    width: 469px;
+    border: 1px solid black;
+    height: 450px;
+    position: relative;
+}
+
+.custom-login-input {
+    width: 255px;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    position: relative;
+    top: 124px;
+}
+
+.custom-login-button {
+    background-color: midnightblue;
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+    width: 272px;
+    position: relative;
+    top: 12px;
+}
+
+.custom-login-button:hover {
+    opacity: 0.8;
+}
+
+.custom-login-checkbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.custom-login-link {
+    color: midnightblue;
+    text-decoration: none;
+    position: relative;
+    top: 7px;
+    left: -195px;
+}
+
+.custom-login-link:hover {
+    text-decoration: underline;
+}
+
+.custom-select-role {
+    position: relative;
+    width: 254px;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    position: relative;
+    left: -1px;
+    top: -39px;
+}
+
+.custom-select-empty {
+    position: relative;
+    width: 116px;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    position: relative;
+    left: 288px;
+    top: -98px;
+}
+
+.custom-register-link {
+    color: midnightblue;
+    text-decoration: none;
+}
+
+.custom-register-link:hover {
+    text-decoration: underline;
+}
